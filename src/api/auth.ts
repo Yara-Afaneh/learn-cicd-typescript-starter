@@ -3,7 +3,7 @@ import { IncomingHttpHeaders } from "http";
 export function getAPIKey(headers: IncomingHttpHeaders): string {
   const authHeader = headers["authorization"];
   if (!authHeader) {
-    throw new Error("No Authorization header ");
+    throw new Error("No Authorization header provided");
   }
 
   const splitAuth = authHeader.split(" ");
