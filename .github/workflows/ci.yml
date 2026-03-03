@@ -1,8 +1,10 @@
 name: ci
 
-on:
+oon:
+  push:
+    branches: [main, addtests]    
   pull_request:
-    branches: [main]
+    branches: [main, addtests]
 
 jobs:
   tests:
