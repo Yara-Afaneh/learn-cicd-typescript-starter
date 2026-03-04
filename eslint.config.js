@@ -5,18 +5,17 @@ import pluginSecurity from "eslint-plugin-security";
 
 export default [
   {
-    ignores: ["dist/**", "**/dist/*"],
+    ignores: ["dist/**", "node_modules/**", "build/**"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   pluginSecurity.configs.recommended,
   {
-    files: ["**/*.{ts,tsx,js,jsx}"],
+    files: ["src/**/*.ts"],
     languageOptions: {
       globals: {
         ...globals.node,
       },
     },
-    rules: {},
   },
 ];
