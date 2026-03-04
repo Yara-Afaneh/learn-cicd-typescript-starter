@@ -5,6 +5,9 @@ import pluginSecurity from "eslint-plugin-security";
 
 export default [
   {
+    ignores: ["dist/**"],
+  },
+  {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
     plugins: {
       js,
