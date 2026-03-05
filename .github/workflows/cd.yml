@@ -1,0 +1,25 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  Deploy: # هذا الاسم ضروري لنجاح الفحص
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Set up Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: Build and Push to Artifact Registry
+        run: |
+          gcloud builds submit --tag us-central1-docker.pkg.dev/striped-sunspot-489222-k5/notely-ar-repo/notely:${{ github.sha }} .
