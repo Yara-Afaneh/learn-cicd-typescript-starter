@@ -33,9 +33,7 @@ jobs:
   deploy:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
-    permissions:
-      contents: "read"
-      id-token: "write"
+    # ملاحظة: تم تفعيل هذا القسم ليعمل عند الرفع على فرع main فقط
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Check out code
@@ -45,13 +43,11 @@ jobs:
         id: auth
         uses: "google-github-actions/auth@v2"
         with:
-          project_id: "striped-sunspot-489222-k5"
-          workload_identity_provider: "projects/976031273531/locations/global/workloadIdentityPools/github-pool-new/providers/github-provider"
-          service_account: "976031273531-compute@developer.gserviceaccount.com"
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
 
       - name: Set up Cloud SDK
         uses: "google-github-actions/setup-gcloud@v2"
 
-      - name: Build and Push Container
+      - name: Build and Push to Artifact Registry
         run: |
           gcloud builds submit --tag us-central1-docker.pkg.dev/striped-sunspot-489222-k5/notely-ar-repo/notely:${{ github.sha }} .
