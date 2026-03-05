@@ -1,8 +1,9 @@
+
 name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main, final-fix-style, addtests]
+    branches: ["**"]  # يعمل على أي فرع ترفعين عليه
   pull_request:
     branches: [main]
 
@@ -33,20 +34,21 @@ jobs:
   deploy:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' 
+    needs: [tests, style] # لن يبدأ الرفع إلا بعد نجاح الفحوصات
+    if: github.event_name == 'push'
     steps:
       - name: Check out code
         uses: actions/checkout@v4
 
       - name: Google Auth
         id: auth
-        uses: "google-github-actions/auth@v2"
+        uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: Set up Cloud SDK
-        uses: "google-github-actions/setup-gcloud@v2"
+        uses: 'google-github-actions/setup-gcloud@v2'
 
-      - name: Build and Push to Artifact Registry
+      - name: Build and Push Container
         run: |
           gcloud builds submit --tag us-central1-docker.pkg.dev/striped-sunspot-489222-k5/notely-ar-repo/notely:${{ github.sha }} .
