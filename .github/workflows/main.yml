@@ -30,29 +30,28 @@ jobs:
       - run: npm run format:check
       - run: npm run lint -- --max-warnings=0
 
-deploy:
-  name: Build and Push to GCP
-  runs-on: ubuntu-latest
-  permissions:
-    contents: "read"
-    id-token: "write"
-  if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  deploy:
+    name: Build and Push to GCP
+    runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      id-token: "write"
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
 
-  steps:
-    - name: Check out code
-      uses: actions/checkout@v4
+      - name: Google Auth
+        id: auth
+        uses: "google-github-actions/auth@v2"
+        with:
+          project_id: "striped-sunspot-489222-k5"
+          workload_identity_provider: "projects/976031273531/locations/global/workloadIdentityPools/github-pool-new/providers/github-provider"
+          service_account: "976031273531-compute@developer.gserviceaccount.com"
 
-    - name: Google Auth
-      id: auth
-      uses: "google-github-actions/auth@v2"
-      with:
-        project_id: "striped-sunspot-489222-k5"
-        workload_identity_provider: "projects/976031273531/locations/global/workloadIdentityPools/github-pool-new/providers/github-provider"
-        service_account: "976031273531-compute@developer.gserviceaccount.com"
+      - name: Set up Cloud SDK
+        uses: "google-github-actions/setup-gcloud@v2"
 
-    - name: Set up Cloud SDK
-      uses: "google-github-actions/setup-gcloud@v2"
-
-    - name: Build and Push Container
-      run: |
-        gcloud builds submit --tag us-central1-docker.pkg.dev/striped-sunspot-489222-k5/notely-ar-repo/notely:${{ github.sha }} .
+      - name: Build and Push Container
+        run: |
+          gcloud builds submit --tag us-central1-docker.pkg.dev/striped-sunspot-489222-k5/notely-ar-repo/notely:${{ github.sha }} .
