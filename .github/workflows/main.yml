@@ -33,8 +33,7 @@ jobs:
   deploy:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
-    # ملاحظة: تم تفعيل هذا القسم ليعمل عند الرفع على فرع main فقط
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' 
     steps:
       - name: Check out code
         uses: actions/checkout@v4
