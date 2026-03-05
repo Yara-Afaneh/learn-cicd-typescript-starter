@@ -47,8 +47,7 @@ jobs:
         uses: "google-github-actions/auth@v2"
         with:
           project_id: "striped-sunspot-489222-k5"
-          workload_identity_provider: "projects/976031273531/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
-          service_account: "976031273531-compute@developer.gserviceaccount.com"
+          workload_identity_provider: 'projects/976031273531/locations/global/workloadIdentityPools/github-pool-new/providers/github-provider'          service_account: "976031273531-compute@developer.gserviceaccount.com"
 
       - name: Set up Cloud SDK
         uses: "google-github-actions/setup-gcloud@v2"
