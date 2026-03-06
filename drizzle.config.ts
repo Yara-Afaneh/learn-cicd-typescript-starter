@@ -6,6 +6,6 @@ export default defineConfig({
   dialect: "turso",
   dbCredentials: {
     url: process.env.DATABASE_URL!,
-    authToken: process.env.DB_AUTH_TOKEN, // تأكدي أن  هنا يطابق ما في الـ yml
+    authToken: process.env.DB_AUTH_TOKEN,
   },
 });
