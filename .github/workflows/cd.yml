@@ -36,7 +36,9 @@ jobs:
           node-version: "20"
 
       - name: Run database migrations
-        run: npx drizzle-kit migrate
+        run: |
+          npm install
+          npx drizzle-kit migrate --url ${{ secrets.DATABASE_URL }} --token ${{ secrets.DB_AUTH_TOKEN }}
 
       - name: Deploy to Cloud Run
         run: |
