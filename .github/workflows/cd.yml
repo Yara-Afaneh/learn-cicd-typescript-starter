@@ -41,4 +41,10 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy notely --image us-central1-docker.pkg.dev/striped-sunspot-489222-k5/notely-ar-repo/notely:${{ github.sha }} --region us-central1 --allow-unauthenticated --project striped-sunspot-489222-k5 --max-instances=4
+          gcloud run deploy notely \
+            --image us-central1-docker.pkg.dev/striped-sunspot-489222-k5/notely-ar-repo/notely:${{ github.sha }} \
+            --region us-central1 \
+            --allow-unauthenticated \
+            --project striped-sunspot-489222-k5 \
+            --max-instances=4 \
+            --set-secrets="DATABASE_URL=notely_db_password:latest,DB_AUTH_TOKEN=notely_db_token:latest"
