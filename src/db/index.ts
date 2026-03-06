@@ -8,6 +8,8 @@ if (config.db.url) {
   conn = drizzle({
     connection: {
       url: config.db.url,
+      // هذا هو السطر الذي كان ينقصنا يا يارا!
+      authToken: config.db.authToken,
     },
     schema: schema,
   });
