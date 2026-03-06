@@ -34,12 +34,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-
       - name: Run database migrations
         run: |
           npm install
-          npx drizzle-kit migrate --url ${{ secrets.DATABASE_URL }} --token ${{ secrets.DB_AUTH_TOKEN }}
-
+          npx drizzle-kit@latest migrate
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy notely --image us-central1-docker.pkg.dev/striped-sunspot-489222-k5/notely-ar-repo/notely:${{ github.sha }} --region us-central1 --allow-unauthenticated --project striped-sunspot-489222-k5 --max-instances=4
