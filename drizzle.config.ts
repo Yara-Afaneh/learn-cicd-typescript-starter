@@ -1,12 +1,11 @@
 import { defineConfig } from "drizzle-kit";
 
-import { config } from "./src/config";
-
 export default defineConfig({
-  out: "./src/db/migrations",
   schema: "./src/db/schema.ts",
+  out: "./drizzle",
   dialect: "turso",
   dbCredentials: {
-    url: config.db.url || "",
+    url: process.env.DATABASE_URL!,
+    authToken: process.env.DB_AUTH_TOKEN, // تأكدي أن  هنا يطابق ما في الـ yml
   },
 });
