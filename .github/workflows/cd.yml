@@ -36,9 +36,7 @@ jobs:
           node-version: "20"
 
       - name: Run database migrations
-        run: |
-          npm install
-          npx drizzle-kit migrate
+        run: npx drizzle-kit migrate
 
       - name: Deploy to Cloud Run
         run: |
