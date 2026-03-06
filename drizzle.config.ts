@@ -5,7 +5,9 @@ export default defineConfig({
   out: "./drizzle",
   dialect: "turso",
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
-    authToken: process.env.DB_AUTH_TOKEN,
+    // ضعي رابط قاعدة بياناتك هنا بين علامتي تنصيص
+    url: "libsql://notely-db-yara-afaneh.aws-eu-west-1.turso.io",
+    // ضعي التوكن (المفتاح الطويل) هنا بين علامتي تنصيص
+    authToken: "your-very-long-token-here",
   },
 });
