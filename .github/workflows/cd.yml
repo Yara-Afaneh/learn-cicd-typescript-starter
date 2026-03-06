@@ -30,8 +30,9 @@ jobs:
 
       - name: Run database migrations
         run: ./scripts/migrate.sh
+
       - name: Run database migrations
-        run: ./scripts/migrate.sh
+        run: npm install && npm run db:migrate
 
       - name: Deploy to Cloud Run
         run: |
