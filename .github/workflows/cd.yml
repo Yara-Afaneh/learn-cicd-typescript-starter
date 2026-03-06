@@ -21,11 +21,10 @@ jobs:
         with:
           node-version: "20"
 
-      # هذا هو السطر الذي سيبحث عنه الموقع في الـ Log
       - name: Run database migrations
         run: |
           npm install
-          npm run db:migrate
+          npm run db:push
 
       - name: Google Cloud Auth
         id: gcp_auth
