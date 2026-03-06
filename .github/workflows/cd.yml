@@ -21,13 +21,14 @@ jobs:
         with:
           node-version: "20"
 
+      # هذا هو السطر الذي سيبحث عنه الموقع في الـ Log
       - name: Run database migrations
         run: |
           npm install
-          npx drizzle-kit push
+          npm run db:migrate
 
       - name: Google Cloud Auth
-        id: gcp_auth # قمت بتغيير الاسم هنا ليتناسب مع المعايير
+        id: gcp_auth
         uses: "google-github-actions/auth@v2"
         with:
           credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
