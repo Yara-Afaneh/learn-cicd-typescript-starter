@@ -11,7 +11,7 @@ jobs:
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-    steps:
+   steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -27,10 +27,18 @@ jobs:
       - name: Build and Push to Artifact Registry
         run: |
           gcloud builds submit --tag us-central1-docker.pkg.dev/striped-sunspot-489222-k5/notely-ar-repo/notely:${{ github.sha }} .
-      - name: Run database migrations
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies and Migrate
         run: |
           npm install
-          npm run db:migrate
+          npx drizzle-kit migrate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Deploy to Cloud Run
         run: |
