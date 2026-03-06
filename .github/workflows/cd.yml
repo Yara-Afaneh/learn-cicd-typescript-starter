@@ -39,6 +39,7 @@ jobs:
           npx drizzle-kit migrate
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DB_AUTH_TOKEN: ${{ secrets.DB_AUTH_TOKEN }}
 
       - name: Deploy to Cloud Run
         run: |
